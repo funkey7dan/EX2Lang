@@ -4,7 +4,9 @@ type aexp = Num of int
  | Var of var 
  | Add of aexp * aexp 
  | Mult of aexp * aexp 
- | Sub of aexp * aexp;;
+ | Sub of aexp * aexp
+ | Shr of aexp * aexp
+ | Shl of aexp * aexp;;
 
 type bexp = True 
  | False 
@@ -37,4 +39,5 @@ let test4 = Comp (Ass("y", Num 1),
   Neg(Aeq(Var "x", Num 0)),
   Comp(Ass("y", Mult(Var "y", Var "x")),Ass("x", Sub(Var "x", Num 1)))
   ));; 
+let test5 = Comp (Ass ("x", Num 12), Ass ("x", Shl(Var "x", Num 22)));; 
 (* y=5*4*3*2*1 *)
