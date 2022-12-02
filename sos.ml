@@ -13,9 +13,9 @@ let rec sos c = match c with
  | (Comp (s1, s2), s) ->  if stop (sos (s1, s)) 
         then (let Inter (s1',s') = sos(s1, s) in Inter (Comp(s1', s2), s')) 
         else (let Final s' = sos(s1, s) in Inter (s2, s'))   
- | (* need to fill If statment*)
- | If
- | (* need to fill While statment*)
+ | (If (b, s1, s2), s) -> if Semantics.solve_b b s then sos (s1, s) else sos (s2, s)
+ | (While (b, s1), s) -> if Semantics.solve_b b s then Inter (Comp (s1, (While (b, s1))), s)
+    else sos (Skip, s);;
 
  let rec run_sos c =
     if stop (sos c) 

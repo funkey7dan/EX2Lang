@@ -22,10 +22,19 @@ type stm = Ass of var * aexp
 
 type state = var -> int ;;
 
+(* Initial x is 1*)
 (* test case*) 
 let test0 = Ass ("x", Num 5);;
 let test1 = Skip;;
+(* x <- 3 then x <- x+1*)
 let test2 = Comp (Ass ("x", Num 3), Ass ("x", Add(Var "x", Num 1)));; 
+(* if not(x==1) x <- 1 else x <- 7*)
 let test3 = If(Neg(Aeq(Var "x", Num 1)),Ass ("x", Num 3),Ass ("x", Num 7));;
-let test4 = Comp (Ass("y", Num 1), While(Neg(Aeq(Var "x", Num 0)),Comp(Ass("y", Mult(Var "y", Var "x")),Ass("x", Sub(Var "x", Num 1)))));; 
-
+(*here x starts from 4*)
+(*y <- 1 then while not(x==0) do y <- y*x then x <- x-1*)
+let test4 = Comp (Ass("y", Num 1),
+ While(
+  Neg(Aeq(Var "x", Num 0)),
+  Comp(Ass("y", Mult(Var "y", Var "x")),Ass("x", Sub(Var "x", Num 1)))
+  ));; 
+(* y=5*4*3*2*1 *)
