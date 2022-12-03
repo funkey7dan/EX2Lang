@@ -20,7 +20,8 @@ type stm = Ass of var * aexp
  | Skip 
  | Comp of stm * stm 
  | If of bexp * stm * stm 
- | While of bexp * stm;;
+ | While of bexp * stm
+ | Do_While of stm * bexp;;
 
 type state = var -> int ;;
 
@@ -38,6 +39,19 @@ let test4 = Comp (Ass("y", Num 1),
  While(
   Neg(Aeq(Var "x", Num 0)),
   Comp(Ass("y", Mult(Var "y", Var "x")),Ass("x", Sub(Var "x", Num 1)))
-  ));; 
-let test5 = Comp (Ass ("x", Num 12), Ass ("x", Shl(Var "x", Num 22)));; 
+  ));;
+
+let test5 =Comp(Comp(Comp(Ass("a", Num 84),Ass("b", Num 22)),Ass("c", Num 0)),
+While(Neg(Aeq(Var "b", Num 0)),
+Comp(Ass("a",Shl(Var "a",Num 1)),Ass("b",Shr(Var "b",Num 1)))));;
+
+let test6 = Comp (Ass ("x", Num 12), Ass ("x", Shl(Var "x", Num 22)));; 
+
+let test7 = Comp (Ass("y", Num 1),
+ Do_While(
+  Comp(Ass("y", Mult(Var "y", Var "x")),Ass("x", Sub(Var "x", Num 1))),
+  Neg(Aeq(Var "x", Num 0))
+  ));;
+
+
 (* y=5*4*3*2*1 *)

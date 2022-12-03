@@ -13,9 +13,11 @@ let rec sos c = match c with
  | (Comp (s1, s2), s) ->  if stop (sos (s1, s)) 
         then (let Inter (s1',s') = sos(s1, s) in Inter (Comp(s1', s2), s')) 
         else (let Final s' = sos(s1, s) in Inter (s2, s'))   
- | (If (b, s1, s2), s) -> if Semantics.solve_b b s then sos (s1, s) else sos (s2, s)
- | (While (b, s1), s) -> if Semantics.solve_b b s then Inter (Comp (s1, (While (b, s1))), s)
-    else sos (Skip, s);;
+ | (If (b, s1, s2), s) -> if (Semantics.foo b s = "tt") then sos (s1, s) else sos (s2, s)
+ | (While (b, s1), s) -> if (Semantics.foo b s = "tt") then Inter (Comp (s1, (While (b, s1))), s)
+    else sos (Skip, s)
+ | (Do_While (s1, b), s) -> sos (s1,s);if (Semantics.foo b s = "tt") then Inter (Comp (s1, (Do_While (s1, b))), s) else sos (Skip, s);;
+
 
  let rec run_sos c =
     if stop (sos c) 
@@ -44,6 +46,20 @@ print_string "y = ";;
 print_int (let Final state = run_sos (Ast.test4, Semantics.s1) in state "y");;
 print_endline "";;
 
+print_string "a = ";;
+print_int (let Final state = run_sos (Ast.test5, Semantics.s1) in state "a");;
+print_endline "";;
+print_string "b = ";;
+print_int (let Final state = run_sos (Ast.test5, Semantics.s1) in state "b");;
+print_endline "";;
+print_string "c = ";;
+print_int (let Final state = run_sos (Ast.test5, Semantics.s1) in state "c");;
+print_endline "";;
+
 print_string "x = ";;
-print_int (let Final state = run_sos (Ast.test5, Semantics.s1) in state "x");;
+print_int (let Final state = run_sos (Ast.test7, Semantics.s1) in state "x");;
+print_endline "";;
+
+print_string "y = ";;
+print_int (let Final state = run_sos (Ast.test7, Semantics.s1) in state "y");;
 print_endline "";;
