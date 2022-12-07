@@ -1,13 +1,17 @@
 (* solve_a: aexp -> state -> int *) 
 
+let rec left_shift e1 e2 = if (e2 == 0) then e1 else (left_shift (e1*2) (e2-1));;
+let rec right_shift e1 e2 = if (e2 == 0) then e1 else (left_shift (e1/2) (e2-1));;
+
+
 let rec solve_a e s = match e with
  Ast.Num m -> m 
  | Var x -> s x 
  | Add (e1, e2) -> solve_a e1 s + solve_a e2 s
  | Mult (e1, e2) -> solve_a e1 s * solve_a e2 s
  | Sub (e1, e2) -> solve_a e1 s - solve_a e2 s
- | Shr (e1,e2) -> solve_a e1 s asr solve_a e2 s
- | Shl (e1,e2) -> solve_a e1 s lsl solve_a e2 s;;
+ | Shr (e1,e2) -> right_shift (solve_a e1 s) (solve_a e2 s)
+ | Shl (e1,e2) -> left_shift (solve_a e1 s) (solve_a e2 s);;
 (* let not_string x = 
     match x with
       "tt" -> "ff"

@@ -46,6 +46,8 @@ While(Neg(Aeq(Var "b", Num 0)),
 Comp(Ass("a",Shl(Var "a",Num 1)),Ass("b",Shr(Var "b",Num 1)))));;
 
 let test6 = Comp (Ass ("x", Num 12), Ass ("x", Shl(Var "x", Num 22)));; 
+let test69 = Comp (Ass ("x", Num 22), Ass ("x", Shr(Var "x", Num 2)));; 
+
 
 let test7 = Comp (Ass("y", Num 1),
  Do_While(

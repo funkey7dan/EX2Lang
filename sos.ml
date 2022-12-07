@@ -63,3 +63,11 @@ print_endline "";;
 print_string "y = ";;
 print_int (let Final state = run_sos (Ast.test7, Semantics.s1) in state "y");;
 print_endline "";;
+
+print_string "x = ";;
+print_int (let Final state = run_sos (Ast.test6, Semantics.s1) in state "x");;
+print_endline "";;
+
+print_string "x = ";;
+print_int (let Final state = run_sos (Ast.test69, Semantics.s1) in state "x");;
+print_endline "";;
