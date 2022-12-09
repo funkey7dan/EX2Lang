@@ -3,7 +3,7 @@
 let rec ooga_booga_division x y z = if (x<0) then z-1 else if (x==0) then z else(ooga_booga_division(x-y) y z+1);;
 let rec left_shift e1 e2 = if (e2 == 0) then e1 else (left_shift (e1*2) (e2-1));;
 (* let rec right_shift e1 e2 = if (e2 == 0) then e1 else (left_shift (e1/2) (e2-1));; *)
-let rec right_shift e1 e2 = if (e2 == 0) then e1 else (left_shift (ooga_booga_division e1 2 0) (e2-1));;
+let rec right_shift e1 e2 = if (e2 == 0) then e1 else (right_shift (ooga_booga_division e1 2 0) (e2-1));;
 
 let rec solve_a e s = match e with
  Ast.Num m -> m 
